@@ -16,9 +16,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useAuth } from "../../contexts/auth";
+import { useNavigation } from "@react-navigation/native";
+import CustomStatusBar from "../../components/CustomStatusBar";
 
 export default function Login() {
   const { signIn, signUp } = useAuth();
+  const navigation = useNavigation();
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -60,6 +63,7 @@ export default function Login() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <CustomStatusBar />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardView}
@@ -184,6 +188,17 @@ export default function Login() {
               )}
             </TouchableOpacity>
 
+            {isLogin && (
+              <TouchableOpacity
+                style={styles.forgotPasswordButton}
+                onPress={() => navigation.navigate("ForgotPassword" as never)}
+              >
+                <Text style={styles.forgotPasswordText}>
+                  Esqueci minha senha
+                </Text>
+              </TouchableOpacity>
+            )}
+
             <TouchableOpacity
               style={styles.switchButton}
               onPress={() => setIsLogin(!isLogin)}
@@ -298,6 +313,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Poppins_600SemiBold",
     color: "#FFFFFF",
+  },
+  forgotPasswordButton: {
+    marginTop: 16,
+    alignItems: "center",
+  },
+  forgotPasswordText: {
+    fontSize: 14,
+    fontFamily: "Poppins_500Medium",
+    color: "#25b05f",
   },
   switchButton: {
     marginTop: 24,

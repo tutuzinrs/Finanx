@@ -1,15 +1,32 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { useAuth } from "../../contexts/auth";
 import { useTransactions } from "../../contexts/transactions";
 import BalanceCard from "../../components/BalanceCard";
 import WeeklyChart from "../../components/WeeklyChart";
 import TransactionItem from "../../components/TransactionItem";
 import BottomNav from "../../components/BottomNav";
+import CustomStatusBar from "../../components/CustomStatusBar";
 
 export default function Home() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { transactions, balance, income, outcome, loading } = useTransactions();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      console.log("✅ Logout realizado com sucesso!");
+    } catch (error) {
+      console.error("❌ Erro ao fazer logout:", error);
+    }
+  };
 
   // Sample data for demonstration
   const weeklyData = [
@@ -24,6 +41,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <CustomStatusBar />
       <View style={styles.container}>
         <ScrollView
           style={styles.scrollView}
@@ -157,5 +175,21 @@ const styles = StyleSheet.create({
   },
   bottomSpacing: {
     height: 20,
+  },
+  logoutButton: {
+    backgroundColor: "#FF6B6B",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 12,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  logoutButtonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "Poppins_600SemiBold",
   },
 });

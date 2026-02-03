@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { CircleArrowUp, CircleArrowDown } from "lucide-react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { CircleArrowUp, CircleArrowDown, User } from "lucide-react-native";
 import { useAuth } from "../contexts/auth";
+import { useNavigation } from "@react-navigation/native";
 
 interface BalanceCardProps {
   balance: number;
@@ -15,11 +16,21 @@ export default function BalanceCard({
   expense,
 }: BalanceCardProps) {
   const { user } = useAuth();
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.greeting}>Olá, bem-vindo!</Text>
-        <Text style={styles.userName}>{user?.name || "Usuário"}</Text>
+        <View>
+          <Text style={styles.greeting}>Olá, bem-vindo!</Text>
+          <Text style={styles.userName}>{user?.name || "Usuário"}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.userIconButton}
+          onPress={() => navigation.navigate("Profile" as never)}
+        >
+          <User color="#FFFFFF" size={24} />
+        </TouchableOpacity>
       </View>
       <View style={styles.balanceContainer}>
         <Text style={styles.label}>Saldo Total</Text>
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 24,
     bottom: 20,
-    height: "23%",
+    height: "40%",
     marginBottom: 10,
     width: "100%",
   },
@@ -78,7 +89,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     marginBottom: 10,
     marginLeft: 20,
-    top: 10,
+    top: 16,
   },
   balance: {
     color: "#FFFFFF",
@@ -86,7 +97,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_700Bold",
     marginBottom: 22,
     marginLeft: 20,
-    bottom: 2,
+    top: 6,
   },
   summaryContainer: {
     flexDirection: "row",
@@ -142,6 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Poppins_400Regular",
     color: "#ffffffff",
+    top: 6,
   },
   userName: {
     fontSize: 24,
@@ -150,15 +162,26 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   header: {
-    alignItems: "flex-start",
-    marginBottom: 10,
-    top: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
+    top: 16,
+    marginLeft: 4,
+  },
+  userIconButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   balanceContainer: {
     backgroundColor: "#57bd81",
     alignItems: "flex-start",
     marginBottom: 8,
-    top: 10,
+    top: 12,
     borderRadius: 12,
     height: "45%",
   },

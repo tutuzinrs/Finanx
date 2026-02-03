@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TrendingUp, TrendingDown, ArrowLeft } from "lucide-react-native";
 import { useTransactions } from "../../contexts/transactions";
 import { useCategories } from "../../contexts/categories";
+import CustomStatusBar from "../../components/CustomStatusBar";
 
 export default function AddTransaction() {
   const navigation = useNavigation();
@@ -77,6 +78,7 @@ export default function AddTransaction() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <CustomStatusBar />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>

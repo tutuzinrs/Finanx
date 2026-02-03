@@ -2,6 +2,7 @@
   "expo": {
     "name": "Finax",
     "slug": "Finax",
+    "scheme": "finax",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logoIcon.png",
@@ -13,7 +14,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "backgroundColor": "#25b05f"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +33,13 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O aplicativo acessa suas fotos para permitir que você escolha uma foto de perfil."
+        }
+      ]
     ]
   }
 }
