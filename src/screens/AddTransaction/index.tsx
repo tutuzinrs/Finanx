@@ -47,11 +47,6 @@ export default function AddTransaction() {
       return;
     }
 
-    if (!selectedCategoryId) {
-      Alert.alert("Erro", "Por favor, selecione uma categoria");
-      return;
-    }
-
     try {
       await addTransaction({
         description,

@@ -20,7 +20,13 @@ api.interceptors.request.use(
     const token = await AsyncStorage.getItem('@finax:token');
     
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      if (!config.headers) {
+        config.headers = {} as any;
+      }
+      config.headers['Authorization'] = `Bearer ${token}`;
+      console.log('🔑 Token anexado à requisição');
+    } else {
+      console.log('⚠️ Nenhum token encontrado para anexar');
     }
     
     // Log para debug

@@ -42,6 +42,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         ]);
 
         if (storedUser[1] && storedToken[1]) {
+          api.defaults.headers.common["Authorization"] =
+            `Bearer ${storedToken[1]}`;
           setUser(JSON.parse(storedUser[1]));
         }
       } catch (error) {
@@ -66,6 +68,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       ]);
 
       setUser(userData);
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } catch (error: any) {
       const message = error.response?.data?.error || "Erro ao fazer login";
       throw new Error(message);
@@ -91,6 +94,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   async function signOut() {
     try {
       await AsyncStorage.multiRemove(["@finax:user", "@finax:token"]);
+      api.defaults.headers.common["Authorization"] = "";
       setUser(null);
     } catch (error) {
       console.error("Erro ao fazer logout:", error);
